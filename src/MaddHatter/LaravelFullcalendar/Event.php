@@ -1,7 +1,8 @@
 <?php namespace MaddHatter\LaravelFullcalendar;
 
 use DateTime;
-
+ use Illuminate\Support\Collection;
+use App\Conversation;
 interface Event
 {
     /**
@@ -31,5 +32,11 @@ interface Event
      * @return DateTime
      */
     public function getEnd();
+/**
+     * Get conversations
+     *
+     * @return Conversation
+     */
+    public function getConversations();
 
 }
