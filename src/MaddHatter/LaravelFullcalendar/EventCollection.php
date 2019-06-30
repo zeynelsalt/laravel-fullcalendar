@@ -18,6 +18,7 @@ class EventCollection
     public function push(Event $event, array $customAttributes = [])
     {
         $this->events->push($this->convertToArray($event, $customAttributes));
+        
     }
 
     public function toJson()
@@ -35,6 +36,7 @@ class EventCollection
         $eventArray = [
             'id' => $this->getEventId($event),
             'title' => $event->getTitle(),
+            'conversations' => $event->getConversations(),
             'allDay' => $event->isAllDay(),
             'start' => $event->getStart()->format('c'),
             'end' => $event->getEnd()->format('c'),
