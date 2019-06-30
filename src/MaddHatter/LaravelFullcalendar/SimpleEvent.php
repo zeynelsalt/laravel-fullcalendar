@@ -1,7 +1,8 @@
 <?php namespace MaddHatter\LaravelFullcalendar;
 
 use DateTime;
-
+use App\Conversation;
+use Illuminate\Support\Collection;
 /**
  * Class SimpleEvent
  *
@@ -37,6 +38,11 @@ class SimpleEvent implements IdentifiableEvent
      */
     public $end;
 
+     /**
+     * @var Conversation
+     */
+    public  $conversations;
+
     /**
      * @var array
      */
@@ -47,15 +53,19 @@ class SimpleEvent implements IdentifiableEvent
      * @param bool            $isAllDay
      * @param string|DateTime $start If string, must be valid datetime format: http://bit.ly/1z7QWbg
      * @param string|DateTime $end   If string, must be valid datetime format: http://bit.ly/1z7QWbg
+      * @param Conversation $conversations
      * @param int|string|null $id
      * @param array           $options
      */
-    public function __construct($title, $isAllDay, $start, $end, $id = null, $options = [])
+    public function __construct($title, $isAllDay, $start, $end, $conversations, $id = null, $options = [])
     {
         $this->title    = $title;
         $this->isAllDay = $isAllDay;
         $this->start    = $start instanceof DateTime ? $start : new DateTime($start);
         $this->end      = $start instanceof DateTime ? $end : new DateTime($end);
+        
+        $this->conversations= $conversations;
+        
         $this->id       = $id;
         $this->options  = $options;
     }
@@ -109,7 +119,10 @@ class SimpleEvent implements IdentifiableEvent
     {
         return $this->end;
     }
-
+ public function getConversations()
+    {
+        return $this->conversations;
+    }
     /**
      * Get the optional event options
      *
