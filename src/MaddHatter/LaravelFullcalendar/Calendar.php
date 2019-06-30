@@ -1,9 +1,9 @@
 <?php namespace MaddHatter\LaravelFullcalendar;
-
+use Illuminate\Support\Collection;
 use ArrayAccess;
 use DateTime;
 use Illuminate\View\Factory;
-
+use App\Conversation;
 class Calendar
 {
 
@@ -22,18 +22,28 @@ class Calendar
      */
     protected $id;
 
+     protected $event;
+
+     protected $conversationCollection;
+
     /**
      * Default options array
      *
      * @var array
      */
     protected $defaultOptions = [
-        'header' => [
-            'left' => 'prev,next today',
+        
+
+         'plugins'=> [ 'interaction', 'dayGrid', 'timeGrid' ],
+'selectable'=> true,
+'weekends'=>true,
+'header' => [
+            'left' => 'prev,next,today',
             'center' => 'title',
             'right' => 'month,agendaWeek,agendaDay',
         ],
-        'eventLimit' => true,
+
+
     ];
 
     /**
@@ -48,7 +58,21 @@ class Calendar
      *
      * @var array
      */
-    protected $callbacks = [];
+    protected $callbacks = [
+        'dayClick'=> 'function(date, jsEvent, view) {
+    $("#create-event").modal("toggle");
+
+     
+    }',
+'eventClick'=> 'function(calEvent, jsEvent, view) {
+
+   $("#show-event").modal("toggle");
+     $("#messageEvent").append(calEvent.conversations.details);
+console.log(calEvent.conversations[0].details);
+     
+  
+
+  }'];
 
     /**
      * @param Factory         $view
@@ -58,6 +82,7 @@ class Calendar
     {
         $this->view            = $view;
         $this->eventCollection = $eventCollection;
+
     }
 
     /**
@@ -71,9 +96,11 @@ class Calendar
      * @param array           $options
      * @return SimpleEvent
      */
-    public static function event($title, $isAllDay, $start, $end, $id = null, $options = [])
+    public static function event($title, $isAllDay, $start, $end, $conversations, $id = null, $options = [])
+
     {
-        return new SimpleEvent($title, $isAllDay, $start, $end, $id, $options);
+
+        return new SimpleEvent($title, $isAllDay, $start, $end, $conversations, $id, $options);
     }
 
     /**
@@ -144,7 +171,12 @@ class Calendar
 
         return $this;
     }
+public function getEvent($trg)
+    {
+        $this->event=$this->eventCollection[$trg];
 
+        
+    }
     /**
      * Add multiple events
      *
@@ -156,9 +188,16 @@ class Calendar
     {
         foreach ($events as $event) {
             $this->eventCollection->push($event, $customAttributes);
+            
         }
 
         return $this;
+    }
+ public function viewEvents()
+    {
+        
+
+        return $this->eventCollection;
     }
 
     /**
@@ -271,3 +310,4 @@ class Calendar
     }
 
 }
+
