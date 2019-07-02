@@ -60,15 +60,30 @@ class Calendar
      */
     protected $callbacks = [
         'dayClick'=> 'function(date, jsEvent, view) {
+            document.getElementById("new_event_start_date").value = date.format();
+            document.getElementById("new_event_end_date").value = date.format();
     $("#create-event").modal("toggle");
 
-     
+ 
     }',
 'eventClick'=> 'function(calEvent, jsEvent, view) {
+ document.getElementById("newconversationdate").value = calEvent.start.format();
+ document.getElementById("newconversationeventid").value = calEvent.id;
 
    $("#show-event").modal("toggle");
-     $("#messageEvent").append(calEvent.conversations.details);
-console.log(calEvent.conversations[0].details);
+$("#messageEvent").empty();
+ $("#messageEvent").append("<h4>Kayıtlı Görüşmeler : </h4><hr>");
+calEvent.conversations.forEach(function(item) {
+
+
+ $("#messageEvent").append("<div style="+"background-color:#BFEE90;padding:10px;border-radius: 4px;"+"><small>"+item.event_date+"</small><p>"+item.details+"</p></div>");
+
+
+ $("#messageEvent").append("<br>");
+
+});
+
+
      
   
 
