@@ -1,5 +1,4 @@
-<script>
-    $(document).ready(function(){
-        $('#calendar-{{ $id }}').fullCalendar({!! $options !!});
-    });
-</script>
+function getCalendar(){
+        $('#calendar').fullCalendar({!! $options !!});
+  $('#calendar').fullCalendar('render');
+}
