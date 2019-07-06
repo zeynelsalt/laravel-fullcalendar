@@ -37,6 +37,7 @@ class EventCollection
             'id' => $this->getEventId($event),
             'title' => $event->getTitle(),
             'conversations' => $event->getConversations(),
+            'user' => $event->getUser(),
             'allDay' => $event->isAllDay(),
             'start' => $event->getStart()->format('c'),
             'end' => $event->getEnd()->format('c'),
