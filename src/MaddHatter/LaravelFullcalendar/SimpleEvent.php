@@ -42,7 +42,10 @@ class SimpleEvent implements IdentifiableEvent
      * @var Conversation
      */
     public  $conversations;
-
+    /**
+     * @var User
+     */
+    public  $user;
     /**
      * @var array
      */
@@ -57,7 +60,7 @@ class SimpleEvent implements IdentifiableEvent
      * @param int|string|null $id
      * @param array           $options
      */
-    public function __construct($title, $isAllDay, $start, $end, $conversations, $id = null, $options = [])
+    public function __construct($title, $isAllDay, $start, $end, $conversations,$user, $id = null, $options = [])
     {
         $this->title    = $title;
         $this->isAllDay = $isAllDay;
@@ -65,6 +68,7 @@ class SimpleEvent implements IdentifiableEvent
         $this->end      = $start instanceof DateTime ? $end : new DateTime($end);
         
         $this->conversations= $conversations;
+        $this->user= $user;
         
         $this->id       = $id;
         $this->options  = $options;
@@ -122,6 +126,10 @@ class SimpleEvent implements IdentifiableEvent
  public function getConversations()
     {
         return $this->conversations;
+    }
+     public function getuser()
+    {
+        return $this->user;
     }
     /**
      * Get the optional event options
