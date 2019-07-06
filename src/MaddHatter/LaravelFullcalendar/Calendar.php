@@ -76,7 +76,7 @@ $("#messageEvent").empty();
 calEvent.conversations.forEach(function(item) {
 
 
- $("#messageEvent").append("<div style="+"background-color:#BFEE90;padding:10px;border-radius: 4px;"+"><small>"+item.event_date+"</small><p>"+item.details+"</p></div>");
+ $("#messageEvent").append("<div style="+"background-color:#BFEE90;padding:10px;border-radius: 4px;"+"><small>"+item.event_date+"/"+item.user.name+"</small><p>"+item.details+"</p></div>");
 
 
  $("#messageEvent").append("<br>");
@@ -111,11 +111,11 @@ calEvent.conversations.forEach(function(item) {
      * @param array           $options
      * @return SimpleEvent
      */
-    public static function event($title, $isAllDay, $start, $end, $conversations, $id = null, $options = [])
+    public static function event($title, $isAllDay, $start, $end, $conversations, $user,$id = null, $options = [])
 
     {
 
-        return new SimpleEvent($title, $isAllDay, $start, $end, $conversations, $id, $options);
+        return new SimpleEvent($title, $isAllDay, $start, $end, $conversations, $user,$id, $options);
     }
 
     /**
