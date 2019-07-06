@@ -39,4 +39,6 @@ interface Event
      */
     public function getConversations();
 
+    public function getUser();
+
 }
